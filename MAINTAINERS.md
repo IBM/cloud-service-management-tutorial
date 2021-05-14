@@ -1,3 +1,3 @@
 # MAINTAINERS
 
-Christopher Ferris - chrisfer@us.ibm.com
+Hafid Haddouti - hafid.haddouti@ibm.com

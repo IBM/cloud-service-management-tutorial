@@ -1,0 +1,39 @@
+#
+# Copyright 2020- IBM Inc. All rights reserved
+# SPDX-License-Identifier: Apache2.0
+#
+# Red Hat Service Binding Operator
+# Uses the Binding from IBM Cloud Operator to extract the secret information
+# and apply them to the application
+#
+# customEnvVar is part for 0.4.0. In newer version changed to mappings.
+
+apiVersion: binding.operators.coreos.com/v1alpha1
+kind: ServiceBinding
+metadata:
+  name: svc-binding-lang-translate-nodejs
+  namespace: ico-test
+spec:
+  # false: bind as env var
+  bindAsFiles: false
+  services:
+  - group: ibmcloud.ibm.com
+    version: v1
+    kind: Binding
+    name: language-translator-demo
+    id: tr
+  application:
+    name: app-svc-binding-demo
+    group: apps
+    version: v1
+    resource: deployments
+  mappings:
+     - name: SVC_LANGUAGE_TRANSLATOR_URL
+       value: '{{ .tr.status.secretName.apikey }}'
+#     - name: SVC_LANGUAGE_TRANSLATOR_APIKEY
+#       value: '{{ .tr.status.secretName.apikey }}'
+#  customEnvVar:
+#     - name: SVC_LANGUAGE_TRANSLATOR_URL
+#       value: '{{ .tr.status.secretName.url }}'
+#     - name: SVC_LANGUAGE_TRANSLATOR_APIKEY
+#       value: '{{ .tr.status.secretName.apikey }}'

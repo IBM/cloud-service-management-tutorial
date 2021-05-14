@@ -1,0 +1,70 @@
+#
+# Copyright 2020- IBM Inc. All rights reserved
+# SPDX-License-Identifier: Apache2.0
+#
+# IBM Cloud Operator
+# Create a service and binding
+# - Language Translator
+# - Hyper Protect PostgreSQL
+#
+# Showing the configuration for
+# - use an existing service
+# - refer to an existing service with a different name
+# - use different context configuration for a service
+# - define service provisioning parameters
+# - define binding annotations for Red Hat Service Binding Operator
+
+apiVersion: ibmcloud.ibm.com/v1
+kind: Service
+metadata:
+  name: language-translator-demo
+  namespace: ico-test
+spec:
+  plan: Alias
+  serviceClass: language-translator
+  externalName: "Language Translator-o6"
+---
+apiVersion: ibmcloud.ibm.com/v1
+kind: Binding
+metadata:
+    name: language-translator-demo
+    namespace: ico-test
+    # Annotation to support Red Hat Service Binding Operator
+    annotations:
+      service.binding/url: path={.status.secretName},objectType=Secret,sourceValue=url
+      service.binding/apikey: path={.status.secretName},objectType=Secret,sourceValue=apikey
+spec:
+    serviceName: language-translator-demo
+---
+apiVersion: ibmcloud.ibm.com/v1
+kind: Service
+metadata:
+  name: postgresql-hyperprotect-tracker
+  namespace: ico-test
+spec:
+  plan: postgresql-free
+  serviceClass: hyperp-dbaas-postgresql
+  context:
+    region: eu-de
+  parameters:
+    # Parameters for the service request. Passwords here are only dummy values
+    # Also best practice, to change the passwords after service creation directly in service portal again!
+    - name: admin_name
+      value: pgadmin
+    - name: password
+      value: pg127$_CHANGE_ME_GdB2d9zR5
+    - name: confirm_password
+      value: pg127$_CHANGE_ME_GdB2d9zR5
+    - name: license_agree
+      value: agreed
+    - name: name
+      value: DBaaSPostgreSql1
+
+---
+apiVersion: ibmcloud.ibm.com/v1
+kind: Binding
+metadata:
+    name: postgresql-hyperprotect-tracker
+    namespace: ico-test
+spec:
+    serviceName: postgresql-hyperprotect-tracker
