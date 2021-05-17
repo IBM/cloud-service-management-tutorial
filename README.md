@@ -7,7 +7,7 @@
 <!-- Not always needed, but a scope helps the user understand in a short sentance like below, why this repo exists -->
 ## Scope
 
-This repository contains the scripts of the tutorial [Provision, bind, and use services in a cloud-native way](https://developer.ibm.com).
+This repository contains the scripts of the tutorial [Provision, bind, and use services in a cloud-native way](https://developer.ibm.com/depmodels/microservices/tutorials/provision-bind-and-use-services-in-a-cloud-native-way/).
 
 Applications often rely on a number of services to do their job. Called _backing services_, these can include databases, search engines, and AI engines. The [twelve-factor methodology](https://12factor.net/) for app development states that it is crucial to provision and bind a backing service as part of your application configuration (described in [Factor 3](https://12factor.net/config) and [Factor 4](https://12factor.net/backing-services)). In addition, it is important that you implement a secure way to retrieve connection information, such as credentials. This tutorial shows you how to manage backing services as code using the [IBM Cloud Operator](https://github.com/IBM/cloud-operators) and the [Red Hat Service Binding Operator](https://github.com/redhat-developer/service-binding-operator) to provision, bind, and use services in a cloud-native way. 
 
